@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Timer from './../Timer/Timer'
 import PomodoroSetting from '../PomodoroSetting/PomodoroSetting'
-import { icons } from '../../assets/icons'
 import './Pomodoro.scss'
 
 const Pomodoro = () => {
@@ -10,22 +9,34 @@ const Pomodoro = () => {
         {
             type: 'session',
             label: 'Pomodoro',
-            value: 25
+            value: 25,
+            min: 1,
+            max: 500,
+            id: 0
         },
         {
             type: 'short-break',
             label: 'Short Break',
-            value: 5
+            value: 5,
+            min: 1,
+            max: 500,
+            id: 1
         },
         {
             type: 'long-break',
             label: 'Long Break',
-            value: 30
+            value: 30,
+            min: 1,
+            max: 500,
+            id: 2
         },
         {
             type: 'interval',
-            label: 'Long Break Interval',
-            value: 4
+            label: 'Long Break After',
+            value: 4,
+            min: 0,
+            max: 100,
+            id: 3
         }
     ]
 
@@ -40,6 +51,32 @@ const Pomodoro = () => {
     const [settings, setSettings] = useState(defaultSettings)
     const [timer, setTimer] = useState(defaultTimer)
 
+    const updateSettings = (action, index) => {
+        const setting = settings[index]
+        console.log(setting)
+
+        // incrementing settings
+
+        if (action === 'decrease' && setting.value === setting.min) {
+            return;
+        }
+        if (action === 'decrease') {
+            let updatedSettings = [...settings];
+            updatedSettings[index].value -= 1;
+            setSettings(updatedSettings);  
+        }
+
+        //decrementing settings
+        if (action === 'increase' && setting.value === setting.max) {
+            return;
+        }
+        if (action === 'increase') {
+            let updatedSettings = [...settings];
+            updatedSettings[index].value += 1;
+            setSettings(updatedSettings);  
+        }
+    }
+
   return (
     <div className='pomodoro'>
 
@@ -48,8 +85,8 @@ const Pomodoro = () => {
         <Timer type={timer.type} label={timer.label} playing={timer.playing} timerMin={timer.timerMin} timerSec={timer.timerSec} />
 
         <div className='pomodoro-settings'>
-            {settings.map((setting) => (
-                <PomodoroSetting label={setting.label} type={setting.type} value={setting.value} key={`setting-${setting.type}`} />
+            {settings && settings.map((setting) => (
+                <PomodoroSetting label={setting.label} type={setting.type} value={setting.value} id={setting.id} updateSettings={updateSettings} key={`setting-${setting.id}`} />
             ))}   
         </div>
         

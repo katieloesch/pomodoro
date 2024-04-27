@@ -8,7 +8,7 @@ const Timer = ({playing, type, label, timerMin, timerSec}) => {
   console.log(type)
   return (
     <div className='timer'>
-      <h2 className='title-timer'>{label}</h2>
+      <span className='title-timer'>{label}</span>
 
       <div className='timer-countdown'>
         <span>{timerMin === 0 ? '00' : (timerMin < 10 ? '0'+ timerMin : timerMin)}</span>

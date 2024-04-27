@@ -1,7 +1,11 @@
 :root {
   /* colours */
-  --black: rgb(0, 0, 0);
-  --white: rgb(255, 255, 255);
+  --pink: rgb(255, 156, 156);
+  --offwhite: rgb(202, 234, 202);
+  --green-light: rgb(125, 190, 125);
+  --green-dark: rgb(45, 77, 45);
+  --green-deep: rgb(15, 30, 15);
+  --red-dark: rgb(123, 36, 36);
 
    /* fonts */
 }
@@ -15,11 +19,13 @@
 
 body {
   min-height: 90vh;
-  /* min-width: 100vw; */
+  min-width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  background-color: var(--green-light);
+
 }
 
 .flex {
