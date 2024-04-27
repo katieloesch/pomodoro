@@ -1,70 +1,91 @@
-# Getting Started with Create React App
+## Overview
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. [Description](#description)
+2. [Deployment Link](#deployment-link)
+3. [Installation](#installation)
+4. [Technologies Used](#technologies)
+5. [Deliverables](#deliverables)
+6. [Planning/Build Process](#planning)
+7. [Challenges](#challenges)
+8. [Wins](#wins)
+9. [Key Learnings & Takeaways](#takeaways)
+10. [Future Improvements](#future-improvements)
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## <a name="description"></a> 1. Description
 
-### `npm start`
+## <a name="deployment-link"></a> 2. Deployment link
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## <a name="installation"></a> 3. Installation
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- package manager used: npm - v9.5.0
+  - https://www.npmjs.com/package/npm
+- to install dependencies, run:
 
-### `npm test`
+```zsh
+npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<br>
 
-### `npm run build`
+## <a name="technologies"></a> 4. Technologies Used
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- This application is based in ReactJS (v18.3.1), JavaScript, JSX and SCSS.
+  - it was created using the 'create-react-app' command
+  - https://create-react-app.dev/
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```zsh
+npx create-react-app .
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### UI
 
-### `npm run eject`
+- fonts:
+- icons:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Additional tools used:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Git / GitHub
+  - used for version control
+  - https://git-scm.com/
+  - https://github.com/https://github.com/
+- Visual Studio Code (VSCode)
+  - code editor used for writing CSS, JSX and JavaScript
+- Google Chrome browser
+  - used for launching the website and displaying the application Google Chrome
+- Google Chrome Developer Tools: For troubleshooting and debugging
+  - https://www.google.com/intl/en_uk/chrome/
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Resources and tutorials:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- https://pomofocus.io/
+- Youtube: [Build A Pomodoro Clock In React](https://www.youtube.com/watch?v=9EVmiQCfkuQ&list=PL5TCQHRtvHGkuR2YZDf_2lDFuc9m5OUlO&index=74) by [Nsquared Coding](https://www.youtube.com/@NsquaredCoding)
 
-## Learn More
+## <a name="deliverables"></a> 5. Deliverables
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### MVP
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Stretch Goals
 
-### Code Splitting
+## <a name="planning"></a>6. Planning / Build Process
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+This was a solo project.
 
-### Analyzing the Bundle Size
+### User Stories
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Day 1 - 26/04/2024
 
-### Making a Progressive Web App
+I started this project by setting up a react app using the 'create-react-app' command.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```zsh
+npx create-react-app .
+```
 
-### Advanced Configuration
+## 7. <a name="challenges"></a> Challenges
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 8. <a name="wins"></a> Wins
 
-### Deployment
+## <a name="takeaways"></a> 9. Key Learnings & Takeaways
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## <a name="future-improvements"></a> 10. Future Improvements

@@ -1,0 +1,61 @@
+.pomodoro-setting {
+    background-color: green;
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    border-radius: 20px;
+    gap: 0.75em;
+
+
+
+    .setting-label{
+        color: white;
+        font-size: 1.15em;
+
+    }
+
+
+
+    .setting-btns {
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      
+
+
+        input {
+            width: 50px;
+            text-align: center;
+            font-size: 1.2em;
+            border: none;
+            background-color: transparent;
+            color: white;
+
+            &:focus {
+                border: none;
+                outline: none;
+                color: yellow;
+
+            }
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            font-size: 1.5em;
+            border: 1px solid transparent;
+            cursor: pointer;
+            color: rgb(205, 239, 196);
+
+            &:hover {
+                // border: 1px solid red;
+                transition: 0.3s;
+                color: white;
+            }
+
+        }
+    }
+}
