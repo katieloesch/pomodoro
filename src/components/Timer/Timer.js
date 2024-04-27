@@ -3,7 +3,7 @@ import { icons } from '../../assets/icons'
 import './Timer.scss'
 
 
-const Timer = ({playing, type, label, timerMin, timerSec}) => {
+const Timer = ({playing, type, label, timerMin, timerSec, resetTimer, startTimer}) => {
 
   console.log(type)
   return (
@@ -17,8 +17,8 @@ const Timer = ({playing, type, label, timerMin, timerSec}) => {
       </div>
 
       <div className='pomodoro-controls'>
-        <button className='btn-control-timer btn-play-pause'>{playing ? icons.pause.svg : icons.start.svg}</button>
-        <button className='btn-control-timer btn-reset-timer'>{icons.reset.svg}</button>
+        <button className='btn-control-timer btn-play-pause' onClick={startTimer}>{playing ? icons.pause.svg : icons.start.svg}</button>
+        <button className='btn-control-timer btn-reset-timer' onClick={resetTimer}>{icons.reset.svg}</button>
       </div>
      
     </div>

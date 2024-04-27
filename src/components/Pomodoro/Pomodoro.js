@@ -7,56 +7,47 @@ const Pomodoro = () => {
 
     const defaultSettings = [
         {
+            id: 0,
             type: 'session',
             label: 'Pomodoro',
             value: 25,
             min: 1,
-            max: 500,
-            id: 0
+            max: 100
         },
         {
+            id: 1,
             type: 'short-break',
             label: 'Short Break',
             value: 5,
             min: 1,
-            max: 500,
-            id: 1
+            max: 100
         },
         {
+            id: 2,
             type: 'long-break',
             label: 'Long Break',
             value: 30,
             min: 1,
-            max: 500,
-            id: 2
+            max: 100
         },
         {
+            id: 3,
             type: 'interval',
             label: 'Long Break After',
             value: 4,
-            min: 0,
-            max: 100,
-            id: 3
+            min: 1,
+            max: 100
         }
     ]
-
-    const defaultTimer = {
-        playing: false,
-        type: 'session',
-        label: 'Pomodoro',
-        timerMin: 25,
-        timerSec: 0
-    }
-
+        
     const [settings, setSettings] = useState(defaultSettings)
-    const [timer, setTimer] = useState(defaultTimer)
+    const [timer, setTimer] = useState(0)
+    const [playing, setPlaying] = useState(false)
 
     const updateSettings = (action, index) => {
         const setting = settings[index]
-        console.log(setting)
 
         // incrementing settings
-
         if (action === 'decrease' && setting.value === setting.min) {
             return;
         }
@@ -77,16 +68,36 @@ const Pomodoro = () => {
         }
     }
 
+    const resetTimer = () => {
+        setSettings(defaultSettings)
+        setTimer(0)
+        setPlaying(false)
+    }
+
+    const decreaseTimerMin = () => {
+        // let updatedSettings = [...settings];
+        // updatedSettings[timer].value -= 1;
+        // setSettings(updatedSettings); 
+
+        // switch() {}
+    }
+
+    const startTimer = () => {
+        // setPlaying(!playing)
+
+        // let intervalId = setInterval(decreaseTimer,1000)
+    }
+
   return (
     <div className='pomodoro'>
 
         <h1 className='title-pomodoro'>Pomodoro Timer</h1>
 
-        <Timer type={timer.type} label={timer.label} playing={timer.playing} timerMin={timer.timerMin} timerSec={timer.timerSec} />
+        <Timer type={settings[timer].type} label={settings[timer].label} playing={playing} timerMin={settings[timer].value} timerSec={0} resetTimer={resetTimer} startTimer={startTimer}/>
 
         <div className='pomodoro-settings'>
             {settings && settings.map((setting) => (
-                <PomodoroSetting label={setting.label} type={setting.type} value={setting.value} id={setting.id} updateSettings={updateSettings} key={`setting-${setting.id}`} />
+                <PomodoroSetting label={setting.label} type={setting.type} value={setting.value} id={setting.id} updateSettings={updateSettings} setTimer={setTimer} key={`setting-${setting.id}`} />
             ))}   
         </div>
         

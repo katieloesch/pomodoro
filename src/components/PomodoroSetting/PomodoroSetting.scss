@@ -13,6 +13,12 @@
         font-size: 1.2em;
     }
 
+    .label-short-break,
+    .label-long-break,
+    .label-session {
+        cursor: pointer;
+    }
+
     .setting-btns {
         display: flex;
         align-items: center;
