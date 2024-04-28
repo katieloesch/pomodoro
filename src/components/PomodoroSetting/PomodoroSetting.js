@@ -2,13 +2,15 @@ import React from 'react'
 import { icons } from '../../assets/icons'
 import './PomodoroSetting.scss'
 
-const PomodoroSetting = ({ label, type, value, id, updateSettings, setTimer }) => {
+const PomodoroSetting = ({ label, type, value, id, settings, updateSettings, setTimerId, setActiveTimer, setTimerSec }) => {
 
   const handleClick = () => {
     if (id === 3) {
       return;
     } else {
-      setTimer(id)
+      setTimerId(id);
+      setActiveTimer(settings[id]);
+      setTimerSec(0)
     }
   }
 

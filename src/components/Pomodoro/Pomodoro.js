@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Timer from './../Timer/Timer'
 import PomodoroSetting from '../PomodoroSetting/PomodoroSetting'
 import './Pomodoro.scss'
@@ -40,9 +40,14 @@ const Pomodoro = () => {
         }
     ]
         
-    const [settings, setSettings] = useState(defaultSettings)
-    const [timer, setTimer] = useState(0)
-    const [playing, setPlaying] = useState(false)
+    const [settings, setSettings] = useState(defaultSettings);
+
+    const [timerId, setTimerId] = useState(0);
+    const [activeTimer, setActiveTimer] = useState(defaultSettings[0])
+
+    const [timerSec, setTimerSec] = useState(0);
+    const [playing, setPlaying] = useState(false);
+
 
     const updateSettings = (action, index) => {
         const setting = settings[index]
@@ -69,35 +74,60 @@ const Pomodoro = () => {
     }
 
     const resetTimer = () => {
-        setSettings(defaultSettings)
-        setTimer(0)
+        setTimerSec(0)
+        setActiveTimer(settings[timerId])
         setPlaying(false)
     }
 
-    const decreaseTimerMin = () => {
-        // let updatedSettings = [...settings];
-        // updatedSettings[timer].value -= 1;
-        // setSettings(updatedSettings); 
-
-        // switch() {}
-    }
 
     const startTimer = () => {
-        // setPlaying(!playing)
+        setPlaying(!playing);
+    };
 
-        // let intervalId = setInterval(decreaseTimer,1000)
-    }
+    useEffect(() => {
+        if (playing) {
+           const intervalTimer = setInterval(() => {
+
+            // Decrease timer seconds
+            if (timerSec > 0) {
+                setTimerSec(timerSec => timerSec-1)
+            }
+
+            // Decrease timer minutes
+            if (timerSec === 0) {
+                setTimerSec(59)
+                let updatedTimer = {...activeTimer};
+                updatedTimer.value -= 1;
+                setActiveTimer(updatedTimer);
+            }
+
+            // Check if timer has finished
+            if (activeTimer.value === 0 && timerSec === 0) {
+                setPlaying(false)
+                alert(`${activeTimer.label} finished!`)
+
+                //skip to next phase
+                //reset timer
+                //change log
+                resetTimer();
+            }
+
+           }, 1000)
+           return () => clearInterval(intervalTimer)
+        }
+    }, [playing, timerSec, activeTimer, resetTimer])
+    
 
   return (
     <div className='pomodoro'>
 
         <h1 className='title-pomodoro'>Pomodoro Timer</h1>
 
-        <Timer type={settings[timer].type} label={settings[timer].label} playing={playing} timerMin={settings[timer].value} timerSec={0} resetTimer={resetTimer} startTimer={startTimer}/>
+        <Timer type={settings[timerId].type} label={settings[timerId].label} playing={playing} timerMin={activeTimer.value} timerSec={timerSec} resetTimer={resetTimer} startTimer={startTimer}/>
 
         <div className='pomodoro-settings'>
             {settings && settings.map((setting) => (
-                <PomodoroSetting label={setting.label} type={setting.type} value={setting.value} id={setting.id} updateSettings={updateSettings} setTimer={setTimer} key={`setting-${setting.id}`} />
+                <PomodoroSetting label={setting.label} type={setting.type} value={setting.value} id={setting.id} settings={settings} updateSettings={updateSettings} setTimerId={setTimerId} setActiveTimer={setActiveTimer} setTimerSec={setTimerSec} key={`setting-${setting.id}`} />
             ))}   
         </div>
         

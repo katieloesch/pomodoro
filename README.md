@@ -61,6 +61,7 @@ npx create-react-app .
 
 - https://pomofocus.io/
 - Youtube: [Build A Pomodoro Clock In React](https://www.youtube.com/watch?v=9EVmiQCfkuQ&list=PL5TCQHRtvHGkuR2YZDf_2lDFuc9m5OUlO&index=74) by [Nsquared Coding](https://www.youtube.com/@NsquaredCoding)
+- Youtube: [Become a Productivity Pro with React: Creating a Pomodoro Timer with React](https://www.youtube.com/playlist?list=PL99EJ97HdCgLW4oypVviPU1HTtdv2jgB8) by [CodeWithCisco](https://www.youtube.com/@codewithcisco)
 
 ## <a name="deliverables"></a> 5. Deliverables
 
@@ -81,6 +82,10 @@ I started this project by setting up a react app using the 'create-react-app' co
 ```zsh
 npx create-react-app .
 ```
+
+### Day 2 - 28/04/2024
+
+- timer logic
 
 ## 7. <a name="challenges"></a> Challenges
 

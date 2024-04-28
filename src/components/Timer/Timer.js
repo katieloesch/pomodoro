@@ -5,7 +5,8 @@ import './Timer.scss'
 
 const Timer = ({playing, type, label, timerMin, timerSec, resetTimer, startTimer}) => {
 
-  console.log(type)
+  console.log('seconds: ', timerSec)
+
   return (
     <div className='timer'>
       <span className='title-timer'>{label}</span>
