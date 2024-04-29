@@ -3,13 +3,12 @@ import { icons } from '../../assets/icons'
 import './Timer.scss'
 
 
-const Timer = ({playing, type, label, timerMin, timerSec, resetTimer, startTimer}) => {
+const Timer = ({playing, type, label, bg, colour, timerMin, timerSec, resetTimer, startTimer}) => {
 
-  console.log('seconds: ', timerSec)
 
   return (
-    <div className='timer'>
-      <span className='title-timer'>{label}</span>
+    <div className='timer' style={{ backgroundColor: bg}}>
+      <span className='title-timer' style={{ color: colour}}>{label}</span>
 
       <div className='timer-countdown'>
         <span>{timerMin === 0 ? '00' : (timerMin < 10 ? '0'+ timerMin : timerMin)}</span>

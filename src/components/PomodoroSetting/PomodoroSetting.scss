@@ -1,5 +1,4 @@
 .pomodoro-setting {
-    background-color: var(--green-dark);
     display: flex;
     flex-direction: column;
     padding: 1em;
@@ -9,7 +8,6 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 
     .setting-label{
-        color: var(--green-light);
         font-size: 1.2em;
     }
 
@@ -24,7 +22,7 @@
         align-items: center;
         justify-content: center;
       
-        input {
+        span {
             width: 50px;
             text-align: center;
             font-size: 1.4em;
@@ -32,11 +30,6 @@
             background-color: transparent;
             color: var(--offwhite);
 
-            &:focus {
-                border: none;
-                outline: none;
-                color: yellow;
-            }
         }
 
         button {
@@ -47,7 +40,7 @@
             font-size: 1.5em;
             border: 1px solid transparent;
             cursor: pointer;
-            color: var(--green-light);
+            color: var(--offwhite);
 
             &:hover {
                 transition: 0.3s;
@@ -57,7 +50,6 @@
     }
 
     .unit {
-        color: var(--green-light);
         font-size: 1em;
         text-align: center;
     }

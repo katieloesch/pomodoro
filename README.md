@@ -87,6 +87,37 @@ npx create-react-app .
 
 - timer logic
 
+```JSX
+    useEffect(() => {
+        if (playing) {
+           const intervalTimer = setInterval(() => {
+
+            // Decrease timer seconds
+            if (timerSec > 0) {
+                setTimerSec(timerSec => timerSec-1)
+            }
+
+            // Decrease timer minutes
+            if (timerSec === 0) {
+                setTimerSec(59)
+                let updatedTimer = {...activeTimer};
+                updatedTimer.value -= 1;
+                setActiveTimer(updatedTimer);
+            }
+
+            // Check if timer has finished
+            if (activeTimer.value === 0 && timerSec === 0) {
+                setPlaying(false)
+                alert(`${activeTimer.label} finished!`)
+                resetTimer();
+            }
+
+           }, 1000)
+           return () => clearInterval(intervalTimer)
+        }
+    }, [playing, timerSec, activeTimer, resetTimer])
+```
+
 ## 7. <a name="challenges"></a> Challenges
 
 ## 8. <a name="wins"></a> Wins

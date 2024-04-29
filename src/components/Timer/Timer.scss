@@ -1,6 +1,5 @@
 .timer {
     border: 2px solid rgb(74, 0, 0);
-    background-color: var(--red-dark);
     color: white;
     font-size: 2em;
     display: flex;
@@ -14,7 +13,6 @@
 
     .title-timer {
         font-size: 0.75em;
-        color: var(--pink);
     }
 
     .timer-countdown {
@@ -34,7 +32,7 @@
             font-size: 1.1em;
             border: 1px solid transparent;
             cursor: pointer;
-            color: var(--pink);
+            color: var(--offwhite);
 
             &:hover {
                 transition: 0.3s;

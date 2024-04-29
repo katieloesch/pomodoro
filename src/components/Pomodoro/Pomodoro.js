@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import Timer from './../Timer/Timer'
-import PomodoroSetting from '../PomodoroSetting/PomodoroSetting'
-import './Pomodoro.scss'
+import React, { useEffect, useState } from 'react';
+import Timer from './../Timer/Timer';
+import PomodoroSetting from '../PomodoroSetting/PomodoroSetting';
+import { colours } from '../../assets/colours';
+import './Pomodoro.scss';
 
 const Pomodoro = () => {
 
@@ -12,7 +13,9 @@ const Pomodoro = () => {
             label: 'Pomodoro',
             value: 25,
             min: 1,
-            max: 100
+            max: 100,
+            colour: colours.pink,
+            bg: colours.red,
         },
         {
             id: 1,
@@ -20,7 +23,9 @@ const Pomodoro = () => {
             label: 'Short Break',
             value: 5,
             min: 1,
-            max: 100
+            max: 100,
+            bg: colours.blue,
+            colour: colours.lightBlue
         },
         {
             id: 2,
@@ -28,7 +33,9 @@ const Pomodoro = () => {
             label: 'Long Break',
             value: 30,
             min: 1,
-            max: 100
+            max: 100,
+            bg: colours.green,
+            colour: colours.lightGreen
         },
         {
             id: 3,
@@ -36,17 +43,27 @@ const Pomodoro = () => {
             label: 'Long Break After',
             value: 4,
             min: 1,
-            max: 100
+            max: 100,
+            bg: colours.green,
+            colour: colours.lightGreen
         }
     ]
-        
+
+    const defaultLog = {
+        session: 0,
+        'short-break': 0,
+        'long-break': 0
+    }
+
+
+
     const [settings, setSettings] = useState(defaultSettings);
-
     const [timerId, setTimerId] = useState(0);
-    const [activeTimer, setActiveTimer] = useState(defaultSettings[0])
-
+    const [activeTimer, setActiveTimer] = useState(defaultSettings[0]);
     const [timerSec, setTimerSec] = useState(0);
     const [playing, setPlaying] = useState(false);
+    const [sessionLog, setSessionLog] = useState(defaultLog);
+
 
 
     const updateSettings = (action, index) => {
@@ -106,16 +123,34 @@ const Pomodoro = () => {
                 setPlaying(false)
                 alert(`${activeTimer.label} finished!`)
 
-                //skip to next phase
-                //reset timer
-                //change log
+                // update the log of completed sessions
+                const updatedLog = {...sessionLog};
+                updatedLog[activeTimer.type] += 1;
+                setSessionLog(sessionLog => updatedLog);
+                console.log(updatedLog)
                 resetTimer();
+
+                //skip to next session
+
+                if (activeTimer.type === 'session' && updatedLog.session < settings[3].value) {
+                    console.log('start short break')
+                    setActiveTimer(settings[1]);
+                    setPlaying(true);
+                } else if (activeTimer.type === 'session' && updatedLog.session === settings[3].value) {
+                    console.log('start long break')
+                    setActiveTimer(settings[2]);
+                    setPlaying(true);
+                } else if (activeTimer.type === 'short-break' || activeTimer.type === 'long-break') {
+                    console.log('start POMODORO')
+                    setActiveTimer(settings[0]);
+                    setPlaying(true);
+                }
             }
 
            }, 1000)
            return () => clearInterval(intervalTimer)
         }
-    }, [playing, timerSec, activeTimer, resetTimer])
+    }, [playing, settings, timerSec, activeTimer, resetTimer, sessionLog])
     
 
   return (
@@ -123,11 +158,11 @@ const Pomodoro = () => {
 
         <h1 className='title-pomodoro'>Pomodoro Timer</h1>
 
-        <Timer type={settings[timerId].type} label={settings[timerId].label} playing={playing} timerMin={activeTimer.value} timerSec={timerSec} resetTimer={resetTimer} startTimer={startTimer}/>
+        <Timer type={settings[timerId].type} label={activeTimer.label} bg={activeTimer.bg} colour={activeTimer.colour} playing={playing} timerMin={activeTimer.value} timerSec={timerSec} resetTimer={resetTimer} startTimer={startTimer}/>
 
         <div className='pomodoro-settings'>
             {settings && settings.map((setting) => (
-                <PomodoroSetting label={setting.label} type={setting.type} value={setting.value} id={setting.id} settings={settings} updateSettings={updateSettings} setTimerId={setTimerId} setActiveTimer={setActiveTimer} setTimerSec={setTimerSec} key={`setting-${setting.id}`} />
+                <PomodoroSetting label={setting.label} type={setting.type} value={setting.value} id={setting.id} bg={setting.bg} colour={setting.colour} settings={settings} updateSettings={updateSettings} setTimerId={setTimerId} setActiveTimer={setActiveTimer} setTimerSec={setTimerSec} key={`setting-${setting.id}`} />
             ))}   
         </div>
         
