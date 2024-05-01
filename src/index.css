@@ -20,9 +20,9 @@ body {
   min-width: 100vw;
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
-  background-color: var(--green-light);
+  background-color: rgb(237, 238, 169);
+  color: rgba(255, 255, 255, 0.5);
 
 }
 

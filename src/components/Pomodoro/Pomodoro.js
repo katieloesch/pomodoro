@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Timer from './../Timer/Timer';
 import PomodoroSetting from '../PomodoroSetting/PomodoroSetting';
 import { colours } from '../../assets/colours';
+import { icons } from '../../assets/icons';
 import './Pomodoro.scss';
 
 const Pomodoro = () => {
@@ -21,7 +22,7 @@ const Pomodoro = () => {
             id: 1,
             type: 'short-break',
             label: 'Short Break',
-            value: 5,
+            value: 1,
             min: 1,
             max: 100,
             bg: colours.blue,
@@ -63,6 +64,10 @@ const Pomodoro = () => {
     const [timerSec, setTimerSec] = useState(0);
     const [playing, setPlaying] = useState(false);
     const [sessionLog, setSessionLog] = useState(defaultLog);
+    const [showSettings, setShowSettings] = useState(false);
+    const [finished, setFinished] = useState(false);
+
+    const [timerKey, setTimerKey] = useState(0);
 
 
 
@@ -91,9 +96,11 @@ const Pomodoro = () => {
     }
 
     const resetTimer = () => {
-        setTimerSec(0)
-        setActiveTimer(settings[timerId])
-        setPlaying(false)
+        // setTimerSec(0)
+        const newActiveTimer = settings[timerId];
+        setActiveTimer(newActiveTimer); 
+        console.log(activeTimer);
+        setPlaying(false);
     }
 
 
@@ -101,42 +108,38 @@ const Pomodoro = () => {
         setPlaying(!playing);
     };
 
+    const switchTimer = (id) => {
+        setTimerId(id);
+        setActiveTimer(settings[id]);
+        setTimerSec(0);
+    }
+
+
     useEffect(() => {
         if (playing) {
            const intervalTimer = setInterval(() => {
 
-            // Decrease timer seconds
-            if (timerSec > 0) {
-                setTimerSec(timerSec => timerSec-1)
-            }
-
-            // Decrease timer minutes
-            if (timerSec === 0) {
-                setTimerSec(59)
-                let updatedTimer = {...activeTimer};
-                updatedTimer.value -= 1;
-                setActiveTimer(updatedTimer);
-            }
-
             // Check if timer has finished
-            if (activeTimer.value === 0 && timerSec === 0) {
-                setPlaying(false)
-                alert(`${activeTimer.label} finished!`)
+            if (finished) {
+                setPlaying(false);
+                alert(`${activeTimer.label} finished!`);
+                setFinished(false);
+
 
                 // update the log of completed sessions
                 const updatedLog = {...sessionLog};
                 updatedLog[activeTimer.type] += 1;
                 setSessionLog(sessionLog => updatedLog);
                 console.log(updatedLog)
-                resetTimer();
+               
 
                 //skip to next session
 
-                if (activeTimer.type === 'session' && updatedLog.session < settings[3].value) {
+                if (activeTimer.type === 'session' && updatedLog.session%settings[3].value !== 0) {
                     console.log('start short break')
                     setActiveTimer(settings[1]);
                     setPlaying(true);
-                } else if (activeTimer.type === 'session' && updatedLog.session === settings[3].value) {
+                } else if (activeTimer.type === 'session' && updatedLog.session%settings[3].value === 0) {
                     console.log('start long break')
                     setActiveTimer(settings[2]);
                     setPlaying(true);
@@ -150,25 +153,99 @@ const Pomodoro = () => {
            }, 1000)
            return () => clearInterval(intervalTimer)
         }
-    }, [playing, settings, timerSec, activeTimer, resetTimer, sessionLog])
+    }, [playing, finished, settings, timerSec, activeTimer, sessionLog])
+    
+
+
+
+    // useEffect(() => {
+    //     if (playing) {
+    //        const intervalTimer = setInterval(() => {
+
+    //         // Decrease timer seconds
+    //         // if (timerSec > 0) {
+    //         //     setTimerSec(timerSec => timerSec-1)
+    //         // }
+
+    //         // // Decrease timer minutes
+    //         // if (timerSec === 0) {
+    //         //     setTimerSec(59)
+    //         //     let updatedTimer = {...activeTimer};
+    //         //     updatedTimer.value -= 1;
+    //         //     setActiveTimer(updatedTimer);
+    //         // }
+
+    //         // Check if timer has finished
+    //         if (activeTimer.value === 0 && timerSec === 0) {
+    //             setPlaying(false)
+    //             alert(`${activeTimer.label} finished!`)
+
+    //             // update the log of completed sessions
+    //             const updatedLog = {...sessionLog};
+    //             updatedLog[activeTimer.type] += 1;
+    //             setSessionLog(sessionLog => updatedLog);
+    //             console.log(updatedLog)
+    //             resetTimer();
+
+    //             //skip to next session
+
+    //             if (activeTimer.type === 'session' && updatedLog.session%settings[3].value !== 0) {
+    //                 console.log('start short break')
+    //                 setActiveTimer(settings[1]);
+    //                 setPlaying(true);
+    //             } else if (activeTimer.type === 'session' && updatedLog.session%settings[3].value === 0) {
+    //                 console.log('start long break')
+    //                 setActiveTimer(settings[2]);
+    //                 setPlaying(true);
+    //             } else if (activeTimer.type === 'short-break' || activeTimer.type === 'long-break') {
+    //                 console.log('start POMODORO')
+    //                 setActiveTimer(settings[0]);
+    //                 setPlaying(true);
+    //             }
+    //         }
+
+    //        }, 1000)
+    //        return () => clearInterval(intervalTimer)
+    //     }
+    // }, [playing, settings, timerSec, activeTimer, resetTimer, sessionLog])
     
 
   return (
-    <div className='pomodoro'>
+    <div className='pomodoro' style={{ backgroundColor: activeTimer.colour}}>
 
-        <h1 className='title-pomodoro'>Pomodoro Timer</h1>
+        <section className='pomodoro-left-section'>
+            <Timer type={settings[timerId].type} label={activeTimer.label} bg={activeTimer.bg} colour={activeTimer.colour} playing={playing} timerMin={activeTimer.value} timerSec={timerSec} resetTimer={resetTimer} startTimer={startTimer} setPlaying={setPlaying} finished={finished} setFinished={setFinished} timerKey={timerKey} setTimerKey={setTimerKey}/>
+        </section>
 
-        <Timer type={settings[timerId].type} label={activeTimer.label} bg={activeTimer.bg} colour={activeTimer.colour} playing={playing} timerMin={activeTimer.value} timerSec={timerSec} resetTimer={resetTimer} startTimer={startTimer}/>
+        <section className='pomodoro-right-section'>
 
-        <div className='pomodoro-settings'>
+                <h1 className='title-pomodoro' style={{ color: activeTimer.bg}}>Pomodoro Timer</h1>
+
+                <div className={`pomodoro-timers`}>
+                    <button className={`pomodoro-timer timer-${settings[0].type}`} onClick={() => switchTimer(0)} style={{ color: settings[0].colour, backgroundColor: settings[0].bg, border: `1px solid ${settings[0].colour}`}}>{settings[0].label}</button>        
+                    <button className={`pomodoro-timer timer-${settings[1].type}`} onClick={() => switchTimer(1)} style={{ color: settings[1].colour, backgroundColor: settings[1].bg, border: `1px solid ${settings[1].colour}`}}>{settings[1].label}</button>        
+                    <button className={`pomodoro-timer timer-${settings[2].type}`} onClick={() => switchTimer(2)} style={{ color: settings[2].colour, backgroundColor: settings[2].bg, border: `1px solid ${settings[2].colour}`}}>{settings[2].label}</button>        
+                </div>
+
+                <div className='pomodoro-btns'>
+                    <button className='btn-show-settings' onClick={() => setShowSettings(true)} style={{ color: activeTimer.bg}}>{icons.settings.svg}</button>
+                    <button className='btn-mute' style={{ color: activeTimer.bg}}>{icons.mute.svg}</button>
+                    <button className='btn-show-info' style={{ color: activeTimer.bg}}>{icons.info.svg}</button>
+                </div>
+
+
+
+
+            {/*showSettings && <div className='pomodoro-settings'>
             {settings && settings.map((setting) => (
                 <PomodoroSetting label={setting.label} type={setting.type} value={setting.value} id={setting.id} bg={setting.bg} colour={setting.colour} settings={settings} updateSettings={updateSettings} setTimerId={setTimerId} setActiveTimer={setActiveTimer} setTimerSec={setTimerSec} key={`setting-${setting.id}`} />
             ))}   
-        </div>
+        </div> */}
+    
+        </section>
+     
         
-        <div className='pomodoro-instructions'>
-            <span>What is the Pomodoro Technique?</span>
-        </div>
+
 
     </div>
   )

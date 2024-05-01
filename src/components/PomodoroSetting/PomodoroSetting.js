@@ -10,7 +10,7 @@ const PomodoroSetting = ({ label, type, value, id, bg, colour ,settings, updateS
     } else {
       setTimerId(id);
       setActiveTimer(settings[id]);
-      setTimerSec(0)
+      setTimerSec(0);
     }
   }
 
