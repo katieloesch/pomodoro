@@ -220,8 +220,18 @@ npx create-react-app .
   - individual source links in src/assets/icons.js
 
 - react-countdown-circle-timer (v3.2.1):
+
   - https://www.npmjs.com/package/react-countdown-circle-timer
   - https://github.com/vydimitrov/react-countdown-circle-timer
+
+- framer-motion (v11.1.7):
+
+  - https://www.npmjs.com/package/framer-motion
+  - https://github.com/framer/motion
+
+- react-confetti (v^6.1.0):
+  - https://www.npmjs.com/package/react-confetti
+  - https://github.com/alampros/react-confetti
 
 ### Additional tools used:
 

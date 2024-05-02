@@ -1,0 +1,10 @@
+.tomatoes {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    .tomato {
+        font-size: 1.6em;
+    }
+}

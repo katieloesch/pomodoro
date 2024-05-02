@@ -4,7 +4,7 @@ import { icons } from '../../assets/icons';
 import './Timer.scss';
 
 
-const Timer = ({playing, type, label, bg, colour, timerMin, timerSec, resetTimer, startTimer, setPlaying, finished, setFinished, timerKey, setTimerKey}) => {
+const Timer = ({playing, label, bg, colour, timerMin, resetTimer, startTimer, setPlaying, setFinished, timerKey, setTimerKey, setShowMessage, sessionLog, setSessionLog, activeTimer}) => {
 
   const children = ({remainingTime}) => {
     let mins = Math.floor(remainingTime/60)
@@ -17,12 +17,21 @@ const Timer = ({playing, type, label, bg, colour, timerMin, timerSec, resetTimer
   }
 
   const handleComplete = () => {
+    setPlaying(false);
     setFinished(true);
-    console.log('Timer completed');
+  
     setTimerKey(prevKey => prevKey + 1);
     resetTimer();
-    // return { shouldRepeat: false, delay: 1 }; // Adjust `shouldRepeat` and `delay` as needed
+    setShowMessage(true);
+
+
+    const updatedLog = {...sessionLog};
+    updatedLog[activeTimer.type] += 1;
+    setSessionLog(updatedLog);
+    // setFinished(false);
   }
+
+
 
   return (
     <div className='timer' style={{ backgroundColor: bg}}>
@@ -35,11 +44,7 @@ const Timer = ({playing, type, label, bg, colour, timerMin, timerSec, resetTimer
       </div>
   */}
 
-      <div className='pomodoro-controls'>
-        <button className='btn-control-timer btn-play-pause' onClick={startTimer}>{playing ? icons.pause.svg : icons.start.svg}</button>
-        <button className='btn-control-timer btn-reset-timer' onClick={resetTimer}>{icons.reset.svg}</button>
 
-      </div>
 
       <CountdownCircleTimer
       key={timerKey}
@@ -53,6 +58,11 @@ const Timer = ({playing, type, label, bg, colour, timerMin, timerSec, resetTimer
     >
       {children}
     </CountdownCircleTimer>
+
+    <div className='pomodoro-controls'>
+      <button className='btn-control-timer btn-play-pause' onClick={startTimer}>{playing ? icons.pause.svg : icons.start.svg}</button>
+      <button className='btn-control-timer btn-reset-timer' onClick={resetTimer}>{icons.reset.svg}</button>
+    </div>
      
     </div>
   )
