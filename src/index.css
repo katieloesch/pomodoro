@@ -4,6 +4,7 @@
   --green-light: rgb(125, 190, 125);
   --green-dark: rgb(45, 77, 45);
   --green-deep: rgb(15, 30, 15);
+  --orange: rgb(223, 76, 43);
 
    /* fonts */
 }
@@ -31,4 +32,13 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+
+.confetti-explosion {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 50% !important;
+  height: 50% !important;
 }

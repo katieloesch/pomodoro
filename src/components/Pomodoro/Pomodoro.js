@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+
 
 import Timer from './../Timer/Timer';
 import PomodoroSetting from '../PomodoroSetting/PomodoroSetting';
+import Message from '../Message/Message';
+import Tomatoes from '../Tomatoes/Tomatoes';
 import { colours } from '../../assets/colours';
 import { icons } from '../../assets/icons';
 import './Pomodoro.scss';
-import Message from '../Message/Message';
-import Tomatoes from '../Tomatoes/Tomatoes';
 
-const Pomodoro = () => {
+
+const Pomodoro = ({startConfetti, setShowInfoModal}) => {
 
     const defaultSettings = [
         {
@@ -64,7 +66,6 @@ const Pomodoro = () => {
     const [settings, setSettings] = useState(defaultSettings);
     const [timerId, setTimerId] = useState(0);
     const [activeTimer, setActiveTimer] = useState(defaultSettings[0]);
-    // const [timerSec, setTimerSec] = useState(0);
     const [playing, setPlaying] = useState(false);
     const [sessionLog, setSessionLog] = useState(defaultLog);
 
@@ -72,7 +73,7 @@ const Pomodoro = () => {
     const [timerKey, setTimerKey] = useState(0);
 
     //modals
-    const [showSettings, setShowSettings] = useState(true);
+    const [showSettings, setShowSettings] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
 
     //framer-motion
@@ -81,29 +82,31 @@ const Pomodoro = () => {
         hidden: { opacity: 0 }
     }
 
-    // const updateSettings = (action, index) => {
-    //     const setting = settings[index]
 
-    //     // incrementing settings
-    //     if (action === 'decrease' && setting.value === setting.min) {
-    //         return;
-    //     }
-    //     if (action === 'decrease') {
-    //         let updatedSettings = [...settings];
-    //         updatedSettings[index].value -= 1;
-    //         setSettings(updatedSettings);  
-    //     }
 
-    //     //decrementing settings
-    //     if (action === 'increase' && setting.value === setting.max) {
-    //         return;
-    //     }
-    //     if (action === 'increase') {
-    //         let updatedSettings = [...settings];
-    //         updatedSettings[index].value += 1;
-    //         setSettings(updatedSettings);  
-    //     }
-    // }
+    const updateSettings = (action, index) => {
+        const setting = settings[index]
+
+        // incrementing settings
+        if (action === 'decrease' && setting.value === setting.min) {
+            return;
+        }
+        if (action === 'decrease') {
+            let updatedSettings = [...settings];
+            updatedSettings[index].value -= 1;
+            setSettings(updatedSettings);  
+        }
+
+        //decrementing settings
+        if (action === 'increase' && setting.value === setting.max) {
+            return;
+        }
+        if (action === 'increase') {
+            let updatedSettings = [...settings];
+            updatedSettings[index].value += 1;
+            setSettings(updatedSettings);  
+        }
+    }
 
     const resetTimer = () => {
         // setTimerSec(0)
@@ -119,7 +122,6 @@ const Pomodoro = () => {
     const startTimer = () => {
         setPlaying(!playing);
         setShowMessage(false);
-
     };
 
     const switchTimer = (id) => {
@@ -127,9 +129,7 @@ const Pomodoro = () => {
         setPlaying(false);
         setTimerId(id);
         setTimerKey(prevKey => prevKey + 1);
-
         setActiveTimer(settings[id]);
-        // setTimerSec(0);
     }
 
 
@@ -212,9 +212,10 @@ const Pomodoro = () => {
 
   return (
     <div className='pomodoro' style={{ backgroundColor: activeTimer.colour}}>
+       
 
         <section className='pomodoro-left-section'>
-            <Timer playing={playing} label={activeTimer.label} bg={activeTimer.bg} colour={activeTimer.colour} timerMin={activeTimer.value} resetTimer={resetTimer} startTimer={startTimer} setPlaying={setPlaying} setFinished={setFinished} timerKey={timerKey} setTimerKey={setTimerKey} setShowMessage={setShowMessage} sessionLog={sessionLog} setSessionLog={setSessionLog} activeTimer={activeTimer} />
+            <Timer playing={playing} label={activeTimer.label} bg={activeTimer.bg} colour={activeTimer.colour} timerMin={activeTimer.value} resetTimer={resetTimer} startTimer={startTimer} setPlaying={setPlaying} setFinished={setFinished} timerKey={timerKey} setTimerKey={setTimerKey} setShowMessage={setShowMessage} sessionLog={sessionLog} setSessionLog={setSessionLog} activeTimer={activeTimer} startConfetti={startConfetti}/>
         </section>
 
         <section className='pomodoro-right-section'>
@@ -229,57 +230,49 @@ const Pomodoro = () => {
     
                 </div>
 
-
-
                 <div className='pomodoro-btns'>
                     <Tomatoes count={sessionLog.session} activeTimer={activeTimer} />
                     <div className='mute-info'>
                         <button className='btn-mute' style={{ color: activeTimer.bg}}>{icons.sound.svg}</button>
-                        <button className='btn-show-info' style={{ color: activeTimer.bg}}>{icons.info.svg}</button>
+                        <button className='btn-show-info' onClick={() => (setShowInfoModal(true))} style={{ color: activeTimer.bg}}>{icons.info.svg}</button>
                     </div>
                    
                 </div>
 
                 {showMessage && <Message activeTimer={activeTimer} sessionLog={sessionLog} settings={settings} setActiveTimer={setActiveTimer} setPlaying={setPlaying} setShowMessage={setShowMessage} setTimerId={setTimerId} />}
     
+              {/*  <AnimatePresence mode='wait'>*/}
+                {showSettings && (<motion.div
+                    className='backdrop'
+                    variants={backdrop}
+                    initial='hidden'
+                    animate='visible'
+                    >
+                    </motion.div>)
+                }
+        
+                { showSettings && <motion.div className='pomodoro-settings-modal'>
+                            { settings && settings.map((setting, index) => (
+                                <PomodoroSetting 
+                                label={setting.label}
+                                type={setting.type}
+                                value={setting.value}
+                                settings={settings}
+                                updateSettings={updateSettings}
+                                id={setting.id}
+                                key={`setting-${index}`}
+                                // setTimerSec={setTimerSec}
+                                setTimerId={setTimerId}
+                                setActiveTimer={setActiveTimer}
+                                bg={setting.bg}
+                                colour={setting.colour}
+                                />
+                            ))}
+                            <div className='btn-close-modal' onClick={() => setShowSettings(false)}>{icons.close.svg}</div>   
+                        </motion.div>
+                        }
+                {/*</AnimatePresence>*/}
         </section>
-
-        
-        <AnimatePresence mode='wait'>
-        {showSettings && (<motion.div
-            className='backdrop'
-            variants={backdrop}
-            initial='hidden'
-            animate='visible'
-            >
-            </motion.div>)}
-            {/* showSettings && <motion.div
-                    className='pomodoro-settings-modal'
-                >
-                    {settings && settings.map((setting) => (
-                        <PomodoroSetting 
-                        label={setting.label}
-                        type={setting.type}
-                        value={setting.value}
-                        settings={settings}
-                        updateSettings={updateSettings}
-                        id={setting.id}
-                        key={`setting-${setting.id}`}
-                        // setTimerSec={setTimerSec}
-                        setTimerId={setTimerId}
-                        setActiveTimer={setActiveTimer}
-                        bg={setting.bg}
-                        colour={setting.colour}
-                        />
-                    ))}   
-                </motion.div>
-                */}
-        </AnimatePresence>
-
-       
-     
-        
-
 
     </div>
   )

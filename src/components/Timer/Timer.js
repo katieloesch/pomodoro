@@ -4,7 +4,7 @@ import { icons } from '../../assets/icons';
 import './Timer.scss';
 
 
-const Timer = ({playing, label, bg, colour, timerMin, resetTimer, startTimer, setPlaying, setFinished, timerKey, setTimerKey, setShowMessage, sessionLog, setSessionLog, activeTimer}) => {
+const Timer = ({playing, label, bg, colour, timerMin, resetTimer, startTimer, setPlaying, setFinished, timerKey, setTimerKey, setShowMessage, sessionLog, setSessionLog, activeTimer, startConfetti}) => {
 
   const children = ({remainingTime}) => {
     let mins = Math.floor(remainingTime/60)
@@ -19,6 +19,10 @@ const Timer = ({playing, label, bg, colour, timerMin, resetTimer, startTimer, se
   const handleComplete = () => {
     setPlaying(false);
     setFinished(true);
+
+    if (activeTimer.id === 0) {
+      startConfetti();
+    }
   
     setTimerKey(prevKey => prevKey + 1);
     resetTimer();
@@ -53,7 +57,7 @@ const Timer = ({playing, label, bg, colour, timerMin, resetTimer, startTimer, se
       duration={timerMin*60}
       colors={['#fff']}
       strokeWidth={7}
-      trailColor='rgba(255, 255, 255, 0.35)'
+      trailColor='rgba(255, 255, 255, 0.2)'
       onComplete={handleComplete}
     >
       {children}

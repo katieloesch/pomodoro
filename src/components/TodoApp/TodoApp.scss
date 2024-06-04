@@ -1,0 +1,17 @@
+.todo-app {
+    .todo-app-title {
+        color: var(--orange);
+    }
+    .btn-login, .btn-register {
+        background-color: transparent;
+        padding: 5px;
+        border-radius: 10px;
+        font-size: 1em;
+        border: 1px solid var(--orange);
+
+        a {
+            text-decoration: none;
+            color: var(--orange);
+        }
+    }
+}
