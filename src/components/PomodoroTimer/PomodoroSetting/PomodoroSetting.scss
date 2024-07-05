@@ -1,0 +1,57 @@
+.pomodoro-setting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  padding: 0.7em;
+  border-radius: 13px;
+  gap: 0.75em;
+  border: 1px solid var(--green-deep);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  .setting-label {
+    font-size: 1rem;
+  }
+
+  .label-short-break,
+  .label-long-break,
+  .label-session {
+    cursor: pointer;
+  }
+
+  .setting-btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span {
+      width: 50px;
+      text-align: center;
+      font-size: 1.2rem;
+      border: none;
+      background-color: transparent;
+      color: var(--offwhite);
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: transparent;
+      font-size: 1.5em;
+      border: 1px solid transparent;
+      cursor: pointer;
+      color: var(--offwhite);
+
+      &:hover {
+        transition: 0.3s;
+        color: white;
+      }
+    }
+  }
+
+  .unit {
+    font-size: 1rem;
+    text-align: center;
+  }
+}
