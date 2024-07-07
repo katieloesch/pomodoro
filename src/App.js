@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import ConfettiExplosion from "react-confetti-explosion";
 
-import { Home, Login, Register } from "./components/TodoApp/Pages";
+import { Home, Login, Register } from "./components/TodoApp/pages";
 import { PageNotFound } from "./components/Shared";
 import { Pomodoro } from "./components/PomodoroTimer";
 

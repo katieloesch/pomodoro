@@ -210,6 +210,7 @@ const Pomodoro = ({ startConfetti, setShowInfoModal }) => {
       <h1 className="pomodoro-title" style={{ color: activeTimer.bg }}>
         Pomodoro Timer
       </h1>
+      <Tomatoes count={sessionLog.session} activeTimer={activeTimer} />
       <section className="pomodoro-timer">
         <Timer
           playing={playing}
@@ -269,8 +270,6 @@ const Pomodoro = ({ startConfetti, setShowInfoModal }) => {
         </div>
 
         <div className="pomodoro-controls__settings">
-          <Tomatoes count={sessionLog.session} activeTimer={activeTimer} />
-
           <button className="btn-mute" style={{ color: activeTimer.bg }}>
             {pomodoroIcons.sound.svg}
           </button>
